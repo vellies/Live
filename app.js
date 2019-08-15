@@ -10,8 +10,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     console.log('This is second Middleware');
-    res.send('Hello From Express');
-    next();
+    res.send('Hello From Express');//like express github lib file html
 });
 
-app.listen(3000);
+app.listen(3000);//created http server in expressjs
