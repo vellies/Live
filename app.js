@@ -1,16 +1,13 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
-//add Middleware 
-// it has 3 arguments like req,res,next
-app.use((req, res, next) => {
-    console.log('Test Next Function');
-    next();//allow the requestto continue to the next middleware in line
-});
+const adminRouter = require('./routes/admin');
+const shopRouter = require('./routes/shop');
 
-app.use((req, res, next) => {
-    console.log('This is second Middleware');
-    res.send('Hello From Express');//like express github lib file html
-});
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(adminRouter);
+app.use(shopRouter);
 
 app.listen(3000);//created http server in expressjs
