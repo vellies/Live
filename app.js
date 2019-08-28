@@ -18,4 +18,6 @@ app.use((req, res, next)=> {
     res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 console.log('vellies');
+console.log('vellies');
+console.log('vellies');
 app.listen(3000);//created http server in expressjs
