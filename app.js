@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const adminData = require('./routes/admin');
+const adminRouter = require('./routes/admin');
 const shopRouter = require('./routes/shop');
 
   app.set('view engine', 'ejs');
@@ -12,7 +12,7 @@ const shopRouter = require('./routes/shop');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRouter);
 app.use(shopRouter);
 
 //Create 404 error Page
