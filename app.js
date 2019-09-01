@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const errorController = require('./controllers/error');
 
 const adminRouter = require('./routes/admin');
 const shopRouter = require('./routes/shop');
@@ -16,9 +17,6 @@ app.use('/admin', adminRouter);
 app.use(shopRouter);
 
 //Create 404 error Page
-app.use((req, res, next)=> {
-    // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-    res.status(404).render('404', {pageTitle:'Page Not Found'});
-});
-console.log('test');
+app.use(errorController.get404);
+
 app.listen(3000);//created http server in expressjs
