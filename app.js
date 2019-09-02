@@ -18,5 +18,5 @@ app.use(shopRouter);
 
 //Create 404 error Page
 app.use(errorController.get404);
-console.log('testing');
+
 app.listen(3000);//created http server in expressjs
