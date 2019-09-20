@@ -65,13 +65,24 @@ exports.postEditproduct = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-    Product.fetchAll((products) => {
-        res.render('admin/products', {
-          prods: products,
-          pageTitle: 'Admin Products',
-          path: '/admin/products'
-        });
-      });
+  Product.findAll()
+  .then(products => {
+    res.render('admin/products', {
+      prods: products,
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
+    });   
+  })
+  .catch(err => {
+    console.log(err);
+  });
+    // Product.fetchAll((products) => {
+    //     res.render('admin/products', {
+    //       prods: products,
+    //       pageTitle: 'Admin Products',
+    //       path: '/admin/products'
+    //     });
+    //   });
 };
 
 exports.postDeleteProduct = (req, res, next) =>{
