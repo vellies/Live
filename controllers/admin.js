@@ -15,12 +15,13 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const product = new Product(null, title, imageUrl, description, price);
   Product.create({
-    title: title,
+    title: title,  
     price: price,
     imageUrl: imageUrl,
     description: description
   }).then(result => {
     console.log('Created Product');
+    res.redirect('/admin/products');
   }).catch(err => {
     console.log(err);
   });
@@ -87,17 +88,19 @@ exports.getProduct = (req, res, next) => {
   .catch(err => {
     console.log(err);
   });
-    // Product.fetchAll((products) => {
-    //     res.render('admin/products', {
-    //       prods: products,
-    //       pageTitle: 'Admin Products',
-    //       path: '/admin/products'
-    //     });
-    //   });
 };
 
 exports.postDeleteProduct = (req, res, next) =>{
     const prodId = req.body.productId;
-    Product.deleteById(prodId);
-    res.redirect('/admin/products');
+    Product.findByPk(prodId)
+    .then(product => {
+      return product.destroy();
+    })
+    .then(result => {
+      console.log('DESTROYED PRODUCT');
+      res.redirect('/admin/products');
+    })
+    .catch(err=>{
+      console.log();
+    });
 }; 
