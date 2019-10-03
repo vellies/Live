@@ -6,7 +6,7 @@ let _db;
 //Error function
 const mongoConnect = (callback) =>{
     MongoClient.connect(
-        'mongodb+srv://vellies:vellies113.@live01-jjkmg.mongodb.net/test?retryWrites=true&w=majority')
+        'mongodb+srv://vellies:vellies113.@live01-jjkmg.mongodb.net/Live?retryWrites=true&w=majority')
         .then(client=> {
             console.log('Successfully connected Cloud MongoDB!');
             _db = client.db();
