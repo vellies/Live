@@ -24,33 +24,32 @@ exports.postAddProduct = (req, res, next) => {
   });
 };
 
-// exports.getEditProduct = (req, res, next) => {
-//   // query object auto manage expressjs
-//   const editMode = req.query.edit;
-//   if(!editMode){
-//     return res.redirect('/');
-//   }
-//   const prodId = req.params.productId;
-//   req.user.getProducts({where: {id: prodId}})
-//   // Product.findByPk(prodId)
-//   .then(products => {
-//     const product = products[0];
-//     console.log('vellies', product);
-//     if(!product) {
-//       return res.redirect('/');
-//     }
-//     res.render('admin/edit-product', { 
-//       pageTitle: 'Edit Product', 
-//       path: '/admin/edit-product', 
-//       editing: editMode,
-//       product: product
-//     });
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
+exports.getEditProduct = (req, res, next) => {
+  // query object auto manage expressjs
+  const editMode = req.query.edit;
+  if(!editMode){
+    return res.redirect('/');
+  }
+  const prodId = req.params.productId;
+  // req.user.getProducts({where: {id: prodId}})
+  // Product.findByPk(prodId)
+  Product.findById(prodId)
+  .then(product => {
+    if(!product) {
+      return res.redirect('/');
+    }
+    res.render('admin/edit-product', { 
+      pageTitle: 'Edit Product', 
+      path: '/admin/edit-product', 
+      editing: editMode,
+      product: product
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
-// };
+};
 
 exports.postEditproduct = (req, res, next) => {
     const prodId = req.body.productId;
@@ -76,8 +75,7 @@ exports.postEditproduct = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  // Product.findAll()
-  req.user.getProducts()
+  Product.fetchAll()
   .then(products => {
     res.render('admin/products', {
       prods: products,
