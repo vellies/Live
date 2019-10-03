@@ -9,7 +9,7 @@ const mongoConnect = require('./util/database').MongoConnect;
 
 
 const adminRouter = require('./routes/admin');
-// const shopRouter = require('./routes/shop');
+const shopRouter = require('./routes/shop');
 
   app.set('view engine', 'ejs');
   app.set('views', 'views');
@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  });
 
 app.use('/admin', adminRouter);
-// app.use(shopRouter);
+app.use(shopRouter);
 
 //Create 404 error Page
 app.use(errorController.get404);
@@ -45,5 +45,4 @@ app.use(errorController.get404);
 mongoConnect(() => {
   app.listen(3000);
 });
-
-console.log('test');
+console.log('Testing Vellies');

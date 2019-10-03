@@ -24,6 +24,7 @@
     "expressjs": "^1.0.1",
     "mongodb": "^3.3.2",
     "mysql2": "^1.7.0",
+    "nodemon": "^1.19.3",
     "sequelize": "^5.19.0"
   }
 }
