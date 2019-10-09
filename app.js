@@ -7,8 +7,6 @@ const errorController = require('./controllers/error');
 const mongoConnect = require('./util/database').MongoConnect;
 const User = require('./models/user');
 
-
-
 const adminRouter = require('./routes/admin');
 const shopRouter = require('./routes/shop');
 
@@ -27,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use((req, res, next) => {
    User.findById("5d9da2781c9d440000421e1d")
    .then(user => {
-     req.user =user;
+     req.user = user;
      next();
    })
    .catch(err => {
