@@ -33,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
    .catch(err => {
      console.log(err);
    });
-  next();
  });
 
 app.use('/admin', adminRouter);
