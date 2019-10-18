@@ -1,52 +1,42 @@
 const path = require('path');
+
 const express = require('express');
-const app = express();
-// const bodyParser = require('body-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const errorController = require('./controllers/error');   
-const mongoConnect = require('./util/database').MongoConnect;
 const User = require('./models/user');
 
-const adminRouter = require('./routes/admin');
-const shopRouter = require('./routes/shop');
+const app = express();
 
-  app.set('view engine', 'ejs');
-  app.set('views', 'views');
+app.set('view engine', 'ejs');
+app.set('views', 'views');
 
-// app.use(bodyParser.urlencoded({extended: false}));
-// app.use(bodyParser());
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
-
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
  app.use((req, res, next) => {
-   User.findById("5da9356b0abb3915c0544fbc")
+   User.findById("5da9f168c5d6640fb4156936")
    .then(user => {
      req.user = user;
      next();
    })
-   .catch(err => {
-     console.log(err);
-   });
+   .catch(err => console.log(err));
  });
 
-app.use('/admin', adminRouter);
-app.use(shopRouter);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
-//Create 404 error Page
 app.use(errorController.get404);
 
-//callback function
 mongoose
 .connect(
   'mongodb+srv://vellies:vellies113.@live01-jjkmg.mongodb.net/Live?retryWrites=true&w=majority'
   )
-  .then(result=>{
+  .then(result => {
     User.findOne().then(user => {
       if (!user) {
         const user = new User({
@@ -59,8 +49,8 @@ mongoose
         user.save();
       }
     });    
-    app.listen(3000)
+    app.listen(3000);
   })
-  .catch(err=>{
+  .catch(err => {
     console.log(err);
   });
