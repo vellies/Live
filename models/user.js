@@ -14,7 +14,11 @@ const userSchema = new Schema({
   cart: {
     items: [
       { 
-        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true }, 
+        productId: { 
+          type: Schema.Types.ObjectId, 
+          ref: 'Product', 
+          required: true 
+        }, 
         quantity: { type: Number, required: true } 
       }
     ]
@@ -50,6 +54,11 @@ userSchema.methods.removeFromCart = function(productId) {
     });
     this.cart.items = updatedCartItems;
     return this.save();
+};
+
+userSchema.methods.clearCart = function() {
+  this.cart = { items: [] };
+  return this.save();
 };
 
 module.exports = mongoose.model('User', userSchema);
