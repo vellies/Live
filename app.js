@@ -9,7 +9,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb+srv://vellies:vellies113.@live01-jjkmg.mongodb.net/Live';
+const MONGODB_URI = 
+'mongodb+srv://vellies:vellies113.@live01-jjkmg.mongodb.net/Live';
 
 const app = express();
 const store = new MongoDBStore({
@@ -36,8 +37,11 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  User.findById("5da9f168c5d6640fb4156936")
-    .then(user => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+   .then(user => {
       req.user = user;
       next();
     })
@@ -51,9 +55,7 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(
-    MONGODB_URI
-  )
+  .connect(MONGODB_URI)
   .then(result => {
     User.findOne().then(user => {
       if (!user) {
